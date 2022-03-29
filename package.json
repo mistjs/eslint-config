@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint .",
-    "release": "pnpm publish --filter=@mistjs/*"
+    "release": "pnpm publish --filter=@mistjs/* --registry=https://registry.npmjs.org/"
   },
   "devDependencies": {
     "@mistjs/eslint-config": "workspace:^",
