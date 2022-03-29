@@ -1,17 +1,16 @@
 {
-  "name": "@mistjs/eslint-config-monorepo",
+  "name": "eslint-config-monorepo",
   "private": true,
   "license": "MIT",
   "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint .",
-    "release": "lerna publish --conventional-commits"
+    "release": "pnpm publish --filter=@mistjs/*"
   },
   "devDependencies": {
     "@mistjs/eslint-config": "workspace:^",
     "eslint": "^8.10.0",
-    "lerna": "^4.0.0",
     "typescript": "^4.6.2"
   }
 }
