@@ -1,0 +1,25 @@
+{
+  "name": "@mistjs/eslint-config-vue",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "eslint": ">=7.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@mistjs/eslint-config-ts": "workspace:^",
+    "eslint-plugin-vue": "^8.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@mistjs/eslint-config-ts",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.4.0",
+    "typescript": ">=3.9"
+  },
+  "dependencies": {
+    "@mistjs/eslint-config-basic": "^0.18.8",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0"
+  }
+}
