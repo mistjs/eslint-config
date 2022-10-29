@@ -1,3 +1,3 @@
 {
-  "extends": "@mistjs"
+  "extends": "@mistjs/eslint-config-vue"
 }
