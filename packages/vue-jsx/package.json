@@ -1,0 +1,31 @@
+{
+  "name": "@mistjs/eslint-config-vue-jsx",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "eslint-config"
+  ],
+  "peerDependencies": {
+    "eslint": ">=7.4.0",
+    "prettier": ">=2.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@mistjs/eslint-config-vue": "workspace:^",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "prettier": "^2.8.3",
+    "typescript": "^4.8.4"
+  },
+  "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",
+  "license": "MIT"
+}
