@@ -4,11 +4,11 @@ importers:
 
   .:
     specifiers:
-      '@mistjs/eslint-config-vue': workspace:^0.0.3
+      '@mistjs/eslint-config-vue-jsx': workspace:^0.0.1
       eslint: ^8.26.0
       typescript: ^4.8.4
     devDependencies:
-      '@mistjs/eslint-config-vue': link:packages/vue
+      '@mistjs/eslint-config-vue-jsx': link:packages/vue-jsx
       eslint: 8.26.0
       typescript: 4.8.4
 
