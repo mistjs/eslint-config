@@ -1,8 +1,7 @@
 const aa = () => {
   const b = false
-  if (!b) {
-    console.log('A')
-  }
+  if (!b) console.log('A')
+
   return () => {
     return (
       <n-config-provider

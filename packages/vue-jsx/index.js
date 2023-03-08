@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['@mistjs/eslint-config-vue', '@vue/eslint-config-prettier'],
+  extends: ['@vue/eslint-config-prettier', '@mistjs/eslint-config-vue'],
   rules: {
     'vue/one-component-per-file': 'off',
     'prettier/prettier': [
@@ -8,16 +8,16 @@ module.exports = {
         singleQuote: true,
         semi: false,
         printWidth: 200,
-        trailingComma: 'none',
+        trailingComma: 'es5',
         bracketSpacing: true,
         jsxBracketSameLine: false,
         arrowParens: 'avoid',
         singleAttributePerLine: true,
-        vueIndentScriptAndStyle: true
+        vueIndentScriptAndStyle: true,
       },
       {
-        usePrettierrc: false
-      }
-    ]
-  }
+        usePrettierrc: false,
+      },
+    ],
+  },
 }
