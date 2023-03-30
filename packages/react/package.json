@@ -1,6 +1,6 @@
 {
   "name": "@mistjs/eslint-config-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "keywords": [],
   "license": "MIT",
@@ -19,12 +19,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@mistjs/eslint-config-ts": "workspace:^0.0.3",
-    "eslint-plugin-react": "^7.31.10"
+    "@mistjs/eslint-config-ts": "workspace:^",
+    "eslint-plugin-react": "^7.32.2"
   },
   "devDependencies": {
-    "eslint": "^8.26.0",
+    "eslint": "^8.37.0",
     "react": "^18.2.0",
-    "typescript": "^4.8.4"
+    "typescript": "^5.0.2"
   }
 }
