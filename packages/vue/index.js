@@ -4,19 +4,16 @@ module.exports = {
       files: ['*.vue'],
       parser: 'vue-eslint-parser',
       parserOptions: {
-        parser: '@typescript-eslint/parser',
+        parser: '@typescript-eslint/parser'
       },
       rules: {
         'no-unused-vars': 'off',
         'no-undef': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-      },
-    },
+        '@typescript-eslint/no-unused-vars': 'off'
+      }
+    }
   ],
-  extends: [
-    'plugin:vue/vue3-recommended',
-    '@mistjs/eslint-config-ts',
-  ],
+  extends: ['plugin:vue/vue3-recommended', '@mistjs/eslint-config-ts'],
   rules: {
     'vue/max-attributes-per-line': 'off',
     'vue/no-v-html': 'off',
@@ -28,22 +25,35 @@ module.exports = {
     // reactivity transform
     'vue/no-setup-props-destructure': 'off',
 
-    'vue/component-tags-order': ['error', {
-      order: ['script', 'template', 'style'],
-    }],
-    'vue/block-tag-newline': ['error', {
-      singleline: 'always',
-      multiline: 'always',
-    }],
+    'vue/component-tags-order': [
+      'error',
+      {
+        order: ['script', 'template', 'style']
+      }
+    ],
+    'vue/block-tag-newline': [
+      'error',
+      {
+        singleline: 'always',
+        multiline: 'always'
+      }
+    ],
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/component-options-name-casing': ['error', 'PascalCase'],
     'vue/custom-event-name-casing': ['error', 'camelCase'],
-    'vue/define-macros-order': ['error', {
-      order: ['defineProps', 'defineEmits'],
-    }],
-    'vue/html-comment-content-spacing': ['error', 'always', {
-      exceptions: ['-'],
-    }],
+    'vue/define-macros-order': [
+      'error',
+      {
+        order: ['defineProps', 'defineEmits']
+      }
+    ],
+    'vue/html-comment-content-spacing': [
+      'error',
+      'always',
+      {
+        exceptions: ['-']
+      }
+    ],
     'vue/no-restricted-v-bind': ['error', '/^v-/'],
     'vue/no-useless-v-bind': 'error',
     'vue/no-v-text-v-html-on-component': 'error',
@@ -73,19 +83,25 @@ module.exports = {
       'error',
       'DebuggerStatement',
       'LabeledStatement',
-      'WithStatement',
+      'WithStatement'
     ],
     'vue/no-sparse-arrays': 'error',
-    'vue/object-curly-newline': ['error', { multiline: true, consistent: true }],
+    'vue/object-curly-newline': [
+      'error',
+      { multiline: true, consistent: true }
+    ],
     'vue/object-curly-spacing': ['error', 'always'],
-    'vue/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
+    'vue/object-property-newline': [
+      'error',
+      { allowMultiplePropertiesPerLine: true }
+    ],
     'vue/object-shorthand': [
       'error',
       'always',
       {
         ignoreConstructors: false,
-        avoidQuotes: true,
-      },
+        avoidQuotes: true
+      }
     ],
     'vue/operator-linebreak': ['error', 'before'],
     'vue/prefer-template': 'error',
@@ -93,6 +109,6 @@ module.exports = {
     'vue/space-in-parens': ['error', 'never'],
     'vue/space-infix-ops': 'error',
     'vue/space-unary-ops': ['error', { words: true, nonwords: false }],
-    'vue/template-curly-spacing': 'error',
-  },
+    'vue/template-curly-spacing': 'error'
+  }
 }

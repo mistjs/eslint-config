@@ -7,13 +7,9 @@ module.exports = {
       {
         singleQuote: true,
         semi: false,
-        printWidth: 100,
+        printWidth: 80,
         trailingComma: 'none',
-        bracketSpacing: true,
-        jsxBracketSameLine: true,
-        arrowParens: 'avoid',
-        singleAttributePerLine: false,
-        vueIndentScriptAndStyle: true
+        proseWrap: 'never'
       },
       {
         usePrettierrc: false

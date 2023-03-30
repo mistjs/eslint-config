@@ -1,6 +1,3 @@
 module.exports = {
-  extends: [
-    '@mistjs/eslint-config-react',
-    '@mistjs/eslint-config-vue',
-  ],
+  extends: ['@mistjs/eslint-config-react', '@mistjs/eslint-config-vue']
 }
