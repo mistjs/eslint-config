@@ -1,6 +1,6 @@
 {
   "name": "@mistjs/eslint-config-vue-jsx",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "files": [
@@ -18,12 +18,12 @@
   },
   "dependencies": {
     "@mistjs/eslint-config-vue": "workspace:^",
-    "@vue/eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-prettier": "^4.2.1"
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^8.37.0",
-    "prettier": "^2.8.7",
+    "prettier": "^3.0.2",
     "typescript": "^5.0.2"
   },
   "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",

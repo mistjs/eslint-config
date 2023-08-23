@@ -18,3 +18,8 @@ const aa = () => {
     )
   }
 }
+
+const aaa = {
+  aaa: 's',
+  'a-a': 's'
+}
