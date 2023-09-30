@@ -1,16 +1,57 @@
 {
-  "name": "eslint-config-monorepo",
-  "private": true,
-  "license": "MIT",
-  "author": "mistjs <aibayanyu@qq.com> (https://github.com/mistjs/)",
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "lint": "eslint .",
-    "release": "pnpm publish --filter=@mistjs/* --registry=https://registry.npmjs.org/"
-  },
-  "devDependencies": {
-    "@mistjs/eslint-config-vue-jsx": "workspace:^",
-    "eslint": "^8.37.0",
-    "typescript": "^5.0.2"
-  }
+	"name": "@mistjs/eslint-config",
+	"author": "aibayanyu20 <aibayanyu@qq.com>",
+	"type": "module",
+	"version": "1.0.0-beta",
+	"main": "dist/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"dev": "tsup --watch"
+	},
+	"devDependencies": {
+		"@types/eslint": "^8.44.3",
+		"@types/node": "^20.8.0",
+		"eslint": "^8.50.0",
+		"eslint-flat-config-viewer": "^0.0.8",
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2",
+		"vitest": "^0.34.6"
+	},
+	"dependencies": {
+		"@stylistic/eslint-plugin": "0.0.6",
+		"@typescript-eslint/eslint-plugin": "^6.7.3",
+		"@typescript-eslint/parser": "^6.7.3",
+		"eslint-config-flat-gitignore": "^0.1.0",
+		"eslint-define-config": "^1.23.0",
+		"eslint-plugin-antfu": "^1.0.0-beta.8",
+		"eslint-plugin-eslint-comments": "^3.2.0",
+		"eslint-plugin-i": "^2.28.1",
+		"eslint-plugin-jsdoc": "^46.8.2",
+		"eslint-plugin-jsonc": "^2.9.0",
+		"eslint-plugin-markdown": "^3.0.1",
+		"eslint-plugin-n": "^16.1.0",
+		"eslint-plugin-no-only-tests": "^3.1.0",
+		"eslint-plugin-unicorn": "^48.0.1",
+		"eslint-plugin-unused-imports": "^3.0.0",
+		"eslint-plugin-vitest": "^0.3.1",
+		"eslint-plugin-vue": "^9.17.0",
+		"eslint-plugin-yml": "^1.9.0",
+		"globals": "^13.22.0",
+		"jsonc-eslint-parser": "^2.3.0",
+		"local-pkg": "^0.4.3",
+		"vue-eslint-parser": "^9.3.1",
+		"yaml-eslint-parser": "^1.2.2"
+	},
+	"peerDependencies": {
+		"eslint": ">8.0.0"
+	}
 }

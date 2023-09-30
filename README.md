@@ -52,6 +52,11 @@ Create `.vscode/settings.json`
 }
 ```
 
+## Fork
+
+This repo is forked from [antfu-eslint-config].
+
+
 ## License
 
 MIT
