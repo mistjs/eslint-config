@@ -2,7 +2,7 @@
 	"name": "@mistjs/eslint-config",
 	"author": "aibayanyu20 <aibayanyu@qq.com>",
 	"type": "module",
-	"version": "1.0.0-beta.1",
+	"version": "1.0.0-beta.2",
 	"main": "dist/index.js",
 	"exports": {
 		".": {
