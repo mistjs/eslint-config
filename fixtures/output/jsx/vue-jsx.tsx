@@ -14,3 +14,9 @@ export default defineComponent(() => {
     )
   }
 })
+
+export const Comp = defineComponent(() => {
+  return () => {
+    return <div>测试</div>
+  }
+})
