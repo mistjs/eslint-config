@@ -39,6 +39,12 @@ runWithConfig(
   },
 )
 
+runWithConfig('jsx', {
+  typescript: true,
+  vue: true,
+  vueJsx: true,
+})
+
 function runWithConfig(name: string, configs: OptionsConfig, ...items: FlatESLintConfigItem[]) {
   it.concurrent(name, async ({ expect }) => {
     const from = resolve('fixtures/input')

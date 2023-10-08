@@ -19,6 +19,7 @@ import {
   typescript,
   unicorn,
   vue,
+  vueJsx,
   yaml,
 } from './configs'
 import { combine } from './utils'
@@ -41,6 +42,13 @@ const VuePackages = [
   '@slidev/cli',
 ]
 
+const VueJsxPkg = [
+  '@vitejs/plugin-vue-jsx',
+  '@vue/babel-plugin-jsx',
+  'unplugin-vue-tsx-auto-props',
+  'unplugin-vue-jsx',
+]
+
 /**
  * Construct an array of ESLint flat config items.
  */
@@ -51,6 +59,7 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
     typescript: enableTypeScript = isPackageExists('typescript'),
     stylistic: enableStylistic = true,
     gitignore: enableGitignore = true,
+    vueJsx: enableVueJsx = VueJsxPkg.some(i => isPackageExists(i)),
     overrides = {},
     componentExts = [],
   } = options
@@ -116,6 +125,14 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
     }))
   }
 
+  if (enableVueJsx) {
+    componentExts.push('jsx')
+    componentExts.push('tsx')
+    configs.push(vueJsx({
+      overrides: overrides.vueJsx,
+      stylistic: enableStylistic,
+    }))
+  }
   if (options.jsonc ?? true) {
     configs.push(
       jsonc({

@@ -14,8 +14,9 @@ export { default as pluginUnicorn } from 'eslint-plugin-unicorn'
 export { default as pluginUnusedImports } from 'eslint-plugin-unused-imports'
 export { default as pluginVue } from 'eslint-plugin-vue'
 export * as pluginYaml from 'eslint-plugin-yml'
-export * as pluginPrettier from 'eslint-plugin-prettier'
+export { default as pluginPrettier } from 'eslint-plugin-prettier'
 export * as configPrettier from 'eslint-config-prettier'
+
 export { default as pluginNoOnlyTests } from 'eslint-plugin-no-only-tests'
 export { default as pluginVitest } from 'eslint-plugin-vitest'
 
