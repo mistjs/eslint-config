@@ -1,6 +1,7 @@
 import { configPrettier, pluginPrettier } from '../plugins'
 import type { FlatESLintConfigItem, OptionsIsInEditor, OptionsOverrides, OptionsStylistic } from '../types'
 import { GLOB_VUE, GLOB_VUE_JSX, GLOB_VUE_TSX } from '../globs'
+import { OFF } from '../flags'
 
 export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOverrides = {}): FlatESLintConfigItem[] {
   const {
@@ -34,6 +35,7 @@ export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOv
             proseWrap: 'never',
           },
         ],
+        'style/comma-dangle': OFF,
         ...overrides,
       },
     },
