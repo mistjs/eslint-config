@@ -40,6 +40,7 @@ export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOv
         'style/brace-style': OFF,
         'style/operator-linebreak': OFF,
         'antfu/if-newline': OFF,
+        'antfu/consistent-list-newline': OFF,
         ...overrides,
       },
     },
