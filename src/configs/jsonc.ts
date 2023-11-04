@@ -1,16 +1,20 @@
-import type { FlatESLintConfigItem, OptionsOverrides, OptionsStylistic } from '../types'
+import type { ConfigItem, OptionsOverrides, OptionsStylistic } from '../types'
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs'
 import { parserJsonc, pluginJsonc } from '../plugins'
 
-export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): FlatESLintConfigItem[] {
+export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): ConfigItem[] {
   const {
-    stylistic = true,
     overrides = {},
+    stylistic = true,
   } = options
+
+  const {
+    indent = 2,
+  } = typeof stylistic === 'boolean' ? {} : stylistic
 
   return [
     {
-      name: 'mistjs:jsonc:setup',
+      name: 'antfu:jsonc:setup',
       plugins: {
         jsonc: pluginJsonc as any,
       },
@@ -20,7 +24,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): FlatES
       languageOptions: {
         parser: parserJsonc,
       },
-      name: 'mistjs:jsonc:rules',
+      name: 'antfu:jsonc:rules',
       rules: {
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
@@ -50,11 +54,11 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): FlatES
         'jsonc/vue-custom-block/no-parsing-error': 'error',
 
         ...stylistic
-          ? {
+            ? {
               'jsonc/array-bracket-spacing': ['error', 'never'],
               'jsonc/comma-dangle': ['error', 'never'],
               'jsonc/comma-style': ['error', 'last'],
-              'jsonc/indent': ['error', 2],
+              'jsonc/indent': ['error', indent],
               'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
               'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
               'jsonc/object-curly-spacing': ['error', 'always'],
@@ -62,7 +66,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): FlatES
               'jsonc/quote-props': 'error',
               'jsonc/quotes': 'error',
             }
-          : {},
+            : {},
 
         ...overrides,
       },

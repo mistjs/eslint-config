@@ -1,10 +1,16 @@
-import type { FlatESLintConfigItem } from '../types'
+import type { ConfigItem, StylisticConfig } from '../types'
 import { pluginAntfu, pluginStylistic } from '../plugins'
 
-export function stylistic(): FlatESLintConfigItem[] {
+export function stylistic(options: StylisticConfig = {}): ConfigItem[] {
+  const {
+    indent = 2,
+    jsx = true,
+    quotes = 'single',
+  } = options
+
   return [
     {
-      name: 'mistjs:stylistic',
+      name: 'antfu:stylistic',
       plugins: {
         antfu: pluginAntfu,
         style: pluginStylistic,
@@ -13,9 +19,11 @@ export function stylistic(): FlatESLintConfigItem[] {
         'antfu/consistent-list-newline': 'error',
         'antfu/if-newline': 'error',
         'antfu/top-level-function': 'error',
-        'curly': ['error', 'multi-or-nest', 'consistent'],
-        'style/array-bracket-spacing': ['error', 'never'],
 
+        'curly': ['error', 'multi-or-nest', 'consistent'],
+
+        'style/array-bracket-spacing': ['error', 'never'],
+        'style/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
         'style/arrow-spacing': ['error', { after: true, before: true }],
         'style/block-spacing': ['error', 'always'],
         'style/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
@@ -25,17 +33,12 @@ export function stylistic(): FlatESLintConfigItem[] {
         'style/computed-property-spacing': ['error', 'never', { enforceForClassMembers: true }],
         'style/dot-location': ['error', 'property'],
         'style/eol-last': 'error',
-        'style/indent': ['error', 2, {
+        'style/indent': ['error', indent, {
           ArrayExpression: 1,
           CallExpression: { arguments: 1 },
+          flatTernaryExpressions: false,
           FunctionDeclaration: { body: 1, parameters: 1 },
           FunctionExpression: { body: 1, parameters: 1 },
-          ImportDeclaration: 1,
-          MemberExpression: 1,
-          ObjectExpression: 1,
-          SwitchCase: 1,
-          VariableDeclarator: 1,
-          flatTernaryExpressions: false,
           ignoreComments: false,
           ignoredNodes: [
             'TemplateLiteral *',
@@ -60,8 +63,13 @@ export function stylistic(): FlatESLintConfigItem[] {
             'FunctionExpression > .params > :matches(Decorator, :not(:first-child))',
             'ClassBody.body > PropertyDefinition[decorators.length > 0] > .key',
           ],
+          ImportDeclaration: 1,
+          MemberExpression: 1,
+          ObjectExpression: 1,
           offsetTernaryExpressions: true,
           outerIIFEBody: 1,
+          SwitchCase: 1,
+          VariableDeclarator: 1,
         }],
         'style/key-spacing': ['error', { afterColon: true, beforeColon: false }],
         'style/keyword-spacing': ['error', { after: true, before: true }],
@@ -83,15 +91,14 @@ export function stylistic(): FlatESLintConfigItem[] {
         'style/no-mixed-spaces-and-tabs': 'error',
         'style/no-multi-spaces': 'error',
         'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
-        'style/no-tabs': 'error',
+        'style/no-tabs': indent === 'tab' ? 'off' : 'error',
         'style/no-trailing-spaces': 'error',
         'style/no-whitespace-before-property': 'error',
         'style/object-curly-spacing': ['error', 'always'],
-        'style/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
         'style/operator-linebreak': ['error', 'before'],
         'style/padded-blocks': ['error', { blocks: 'never', classes: 'never', switches: 'never' }],
         'style/quote-props': ['error', 'consistent-as-needed'],
-        'style/quotes': ['error', 'single', { allowTemplateLiterals: true, avoidEscape: true }],
+        'style/quotes': ['error', quotes, { allowTemplateLiterals: true, avoidEscape: false }],
         'style/rest-spread-spacing': ['error', 'never'],
         'style/semi': ['error', 'never'],
         'style/semi-spacing': ['error', { after: true, before: false }],
@@ -116,6 +123,44 @@ export function stylistic(): FlatESLintConfigItem[] {
         'style/type-annotation-spacing': ['error', {}],
         'style/wrap-iife': ['error', 'any', { functionPrototypeMethods: true }],
         'style/yield-star-spacing': ['error', 'both'],
+
+        ...jsx
+            ? {
+              'style/jsx-closing-bracket-location': 'error',
+              'style/jsx-closing-tag-location': 'error',
+              'style/jsx-curly-brace-presence': ['error', { propElementValues: 'always' }],
+              'style/jsx-curly-newline': 'error',
+              'style/jsx-curly-spacing': ['error', 'never'],
+              'style/jsx-equals-spacing': 'error',
+              'style/jsx-first-prop-new-line': 'error',
+              'style/jsx-indent': ['error', indent, { checkAttributes: true, indentLogicalExpressions: true }],
+              'style/jsx-indent-props': ['error', indent],
+              'style/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
+              'style/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
+              'style/jsx-quotes': 'error',
+              'style/jsx-tag-spacing': [
+                'error',
+                {
+                  afterOpening: 'never',
+                  beforeClosing: 'never',
+                  beforeSelfClosing: 'always',
+                  closingSlash: 'never',
+                },
+              ],
+              'style/jsx-wrap-multilines': [
+                'error',
+                {
+                  arrow: 'parens-new-line',
+                  assignment: 'parens-new-line',
+                  condition: 'parens-new-line',
+                  declaration: 'parens-new-line',
+                  logical: 'parens-new-line',
+                  prop: 'parens-new-line',
+                  return: 'parens-new-line',
+                },
+              ],
+            }
+            : {},
       },
     },
   ]

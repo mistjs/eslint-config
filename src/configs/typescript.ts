@@ -1,24 +1,22 @@
 import process from 'node:process'
-import type { FlatESLintConfigItem, OptionsComponentExts, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from '../types'
+import type { ConfigItem, OptionsComponentExts, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from '../types'
 import { GLOB_SRC } from '../globs'
 import { parserTs, pluginAntfu, pluginImport, pluginTs } from '../plugins'
-import { OFF } from '../flags'
-import { renameRules } from '../utils'
+import { renameRules, toArray } from '../utils'
 
 export function typescript(
-  options?: OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions,
-): FlatESLintConfigItem[] {
+    options?: OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions,
+): ConfigItem[] {
   const {
     componentExts = [],
     overrides = {},
     parserOptions = {},
-    tsconfigPath,
   } = options ?? {}
 
-  const typeAwareRules: FlatESLintConfigItem['rules'] = {
-    'dot-notation': OFF,
-    'no-implied-eval': OFF,
-    'no-throw-literal': OFF,
+  const typeAwareRules: ConfigItem['rules'] = {
+    'dot-notation': 'off',
+    'no-implied-eval': 'off',
+    'no-throw-literal': 'off',
     'ts/await-thenable': 'error',
     'ts/dot-notation': ['error', { allowKeywords: true }],
     'ts/no-floating-promises': 'error',
@@ -37,10 +35,14 @@ export function typescript(
     'ts/unbound-method': 'error',
   }
 
+  const tsconfigPath = options?.tsconfigPath
+      ? toArray(options.tsconfigPath)
+      : undefined
+
   return [
     {
       // Install the plugins without globs, so they can be configured separately.
-      name: 'mistjs:typescript:setup',
+      name: 'antfu:typescript:setup',
       plugins: {
         antfu: pluginAntfu,
         import: pluginImport,
@@ -55,61 +57,61 @@ export function typescript(
       languageOptions: {
         parser: parserTs,
         parserOptions: {
+          extraFileExtensions: componentExts.map(ext => `.${ext}`),
           sourceType: 'module',
           ...tsconfigPath
-            ? {
-                project: [tsconfigPath],
+              ? {
+                project: tsconfigPath,
                 tsconfigRootDir: process.cwd(),
               }
-            : {},
+              : {},
           ...parserOptions as any,
         },
       },
-      name: 'mistjs:typescript:rules',
+      name: 'antfu:typescript:rules',
       rules: {
         ...renameRules(
-          pluginTs.configs['eslint-recommended'].overrides![0].rules!,
-          '@typescript-eslint/',
-          'ts/',
+            pluginTs.configs['eslint-recommended'].overrides![0].rules!,
+            '@typescript-eslint/',
+            'ts/',
         ),
         ...renameRules(
-          pluginTs.configs.strict.rules!,
-          '@typescript-eslint/',
-          'ts/',
+            pluginTs.configs.strict.rules!,
+            '@typescript-eslint/',
+            'ts/',
         ),
 
         'antfu/generic-spacing': 'error',
         'antfu/named-tuple-spacing': 'error',
         'antfu/no-cjs-exports': 'error',
-        'antfu/no-const-enum': 'error',
-        'antfu/no-ts-export-equal': 'error',
 
-        'no-dupe-class-members': OFF,
-        'no-invalid-this': OFF,
-        'no-loss-of-precision': OFF,
-        'no-redeclare': OFF,
-        'no-use-before-define': OFF,
-        'no-useless-constructor': OFF,
+        'no-dupe-class-members': 'off',
+        'no-invalid-this': 'off',
+        'no-loss-of-precision': 'off',
+        'no-redeclare': 'off',
+        'no-use-before-define': 'off',
+        'no-useless-constructor': 'off',
         'ts/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
         'ts/ban-types': ['error', { types: { Function: false } }],
         'ts/consistent-type-definitions': ['error', 'interface'],
         'ts/consistent-type-imports': ['error', { disallowTypeAnnotations: false, prefer: 'type-imports' }],
         'ts/no-dupe-class-members': 'error',
-        'ts/no-dynamic-delete': OFF,
-        'ts/no-explicit-any': OFF,
-        'ts/no-extraneous-class': OFF,
+        'ts/no-dynamic-delete': 'off',
+        'ts/no-explicit-any': 'off',
+        'ts/no-extraneous-class': 'off',
+        'ts/no-import-type-side-effects': 'error',
         'ts/no-invalid-this': 'error',
-        'ts/no-invalid-void-type': OFF,
+        'ts/no-invalid-void-type': 'off',
         'ts/no-loss-of-precision': 'error',
-        'ts/no-non-null-assertion': OFF,
+        'ts/no-non-null-assertion': 'off',
         'ts/no-redeclare': 'error',
         'ts/no-require-imports': 'error',
-        'ts/no-unused-vars': OFF,
+        'ts/no-unused-vars': 'off',
         'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
-        'ts/no-useless-constructor': OFF,
+        'ts/no-useless-constructor': 'off',
         'ts/prefer-ts-expect-error': 'error',
-        'ts/triple-slash-reference': OFF,
-        'ts/unified-signatures': OFF,
+        'ts/triple-slash-reference': 'off',
+        'ts/unified-signatures': 'off',
 
         ...tsconfigPath ? typeAwareRules : {},
         ...overrides,
@@ -117,26 +119,27 @@ export function typescript(
     },
     {
       files: ['**/*.d.ts'],
-      name: 'mistjs:typescript:dts-overrides',
+      name: 'antfu:typescript:dts-overrides',
       rules: {
-        'eslint-comments/no-unlimited-disable': OFF,
-        'import/no-duplicates': OFF,
-        'unused-imports/no-unused-vars': OFF,
+        'eslint-comments/no-unlimited-disable': 'off',
+        'import/no-duplicates': 'off',
+        'no-restricted-syntax': 'off',
+        'unused-imports/no-unused-vars': 'off',
       },
     },
     {
       files: ['**/*.{test,spec}.ts?(x)'],
-      name: 'mistjs:typescript:tests-overrides',
+      name: 'antfu:typescript:tests-overrides',
       rules: {
-        'no-unused-expressions': OFF,
+        'no-unused-expressions': 'off',
       },
     },
     {
       files: ['**/*.js', '**/*.cjs'],
-      name: 'mistjs:typescript:javascript-overrides',
+      name: 'antfu:typescript:javascript-overrides',
       rules: {
-        'ts/no-require-imports': OFF,
-        'ts/no-var-requires': OFF,
+        'ts/no-require-imports': 'off',
+        'ts/no-var-requires': 'off',
       },
     },
   ]

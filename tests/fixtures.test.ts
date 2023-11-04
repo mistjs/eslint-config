@@ -3,7 +3,7 @@ import { afterAll, beforeAll, it } from 'vitest'
 import fs from 'fs-extra'
 import { execa } from 'execa'
 import fg from 'fast-glob'
-import type { FlatESLintConfigItem, OptionsConfig } from '../src'
+import type { ConfigItem, OptionsConfig } from '../src'
 
 beforeAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
@@ -45,7 +45,7 @@ runWithConfig('jsx', {
   vueJsx: true,
 })
 
-function runWithConfig(name: string, configs: OptionsConfig, ...items: FlatESLintConfigItem[]) {
+function runWithConfig(name: string, configs: OptionsConfig, ...items: ConfigItem[]) {
   it.concurrent(name, async ({ expect }) => {
     const from = resolve('fixtures/input')
     const output = resolve('fixtures/output', name)

@@ -16,6 +16,7 @@ export { default as pluginVue } from 'eslint-plugin-vue'
 export * as pluginYaml from 'eslint-plugin-yml'
 export { default as pluginPrettier } from 'eslint-plugin-prettier'
 export * as configPrettier from 'eslint-config-prettier'
+export { default as pluginPerfectionist } from 'eslint-plugin-perfectionist'
 
 export { default as pluginNoOnlyTests } from 'eslint-plugin-no-only-tests'
 export { default as pluginVitest } from 'eslint-plugin-vitest'

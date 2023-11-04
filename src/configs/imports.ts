@@ -1,13 +1,14 @@
-import type { FlatESLintConfigItem, OptionsStylistic } from '../types'
+import type { ConfigItem, OptionsStylistic } from '../types'
 import { pluginAntfu, pluginImport } from '../plugins'
 
-export function imports(options: OptionsStylistic = {}): FlatESLintConfigItem[] {
+export function imports(options: OptionsStylistic = {}): ConfigItem[] {
   const {
     stylistic = true,
   } = options
+
   return [
     {
-      name: 'mistjs:imports',
+      name: 'antfu:imports',
       plugins: {
         antfu: pluginAntfu,
         import: pluginImport,
@@ -25,10 +26,10 @@ export function imports(options: OptionsStylistic = {}): FlatESLintConfigItem[] 
         'import/order': 'error',
 
         ...stylistic
-          ? {
+            ? {
               'import/newline-after-import': ['error', { considerComments: true, count: 1 }],
             }
-          : {},
+            : {},
       },
     },
   ]

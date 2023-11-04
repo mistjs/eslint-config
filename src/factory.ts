@@ -2,7 +2,7 @@ import process from 'node:process'
 import fs from 'node:fs'
 import { isPackageExists } from 'local-pkg'
 import gitignore from 'eslint-config-flat-gitignore'
-import type { FlatESLintConfigItem, OptionsConfig } from './types'
+import type { ConfigItem, OptionsConfig } from './types'
 import {
   comments,
   ignores,
@@ -12,6 +12,7 @@ import {
   jsonc,
   markdown,
   node,
+  perfectionist,
   sortPackageJson,
   sortTsconfig,
   stylistic,
@@ -24,7 +25,7 @@ import {
 } from './configs'
 import { combine } from './utils'
 
-const flatConfigProps: (keyof FlatESLintConfigItem)[] = [
+const flatConfigProps: (keyof ConfigItem)[] = [
   'files',
   'ignores',
   'languageOptions',
@@ -42,29 +43,35 @@ const VuePackages = [
   '@slidev/cli',
 ]
 
+
 const VueJsxPkg = [
   '@vitejs/plugin-vue-jsx',
   '@vue/babel-plugin-jsx',
   'unplugin-vue-tsx-auto-props',
   'unplugin-vue-jsx',
 ]
-
 /**
  * Construct an array of ESLint flat config items.
  */
-export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...userConfigs: (FlatESLintConfigItem | FlatESLintConfigItem[])[]) {
+export function mist(options: OptionsConfig & ConfigItem = {}, ...userConfigs: (ConfigItem | ConfigItem[])[]) {
   const {
-    isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
-    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
-    typescript: enableTypeScript = isPackageExists('typescript'),
-    stylistic: enableStylistic = true,
-    gitignore: enableGitignore = true,
-    vueJsx: enableVueJsx = VueJsxPkg.some(i => isPackageExists(i)),
-    overrides = {},
     componentExts = [],
+    gitignore: enableGitignore = true,
+    isInEditor = !!((process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI),
+    overrides = {},
+    typescript: enableTypeScript = isPackageExists('typescript'),
+    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
   } = options
 
-  const configs: FlatESLintConfigItem[][] = []
+  const stylisticOptions = options.stylistic === false
+      ? false
+      : typeof options.stylistic === 'object'
+          ? options.stylistic
+          : {}
+  if (stylisticOptions && !('jsx' in stylisticOptions))
+    stylisticOptions.jsx = options.jsx ?? true
+
+  const configs: ConfigItem[][] = []
 
   if (enableGitignore) {
     if (typeof enableGitignore !== 'boolean') {
@@ -78,20 +85,23 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
 
   // Base configs
   configs.push(
-    ignores(),
-    javascript({
-      isInEditor,
-      overrides: overrides.javascript,
-    }),
-    comments(),
-    node(),
-    jsdoc({
-      stylistic: enableStylistic,
-    }),
-    imports({
-      stylistic: enableStylistic,
-    }),
-    unicorn(),
+      ignores(),
+      javascript({
+        isInEditor,
+        overrides: overrides.javascript,
+      }),
+      comments(),
+      node(),
+      jsdoc({
+        stylistic: stylisticOptions,
+      }),
+      imports({
+        stylistic: stylisticOptions,
+      }),
+      unicorn(),
+
+      // Optional plugins (installed but not enabled by default)
+      perfectionist(),
   )
 
   if (enableVue)
@@ -100,15 +110,15 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
   if (enableTypeScript) {
     configs.push(typescript({
       ...typeof enableTypeScript !== 'boolean'
-        ? enableTypeScript
-        : {},
+          ? enableTypeScript
+          : {},
       componentExts,
       overrides: overrides.typescript,
     }))
   }
 
-  if (enableStylistic)
-    configs.push(stylistic())
+  if (stylisticOptions)
+    configs.push(stylistic(stylisticOptions))
 
   if (options.test ?? true) {
     configs.push(test({
@@ -120,34 +130,26 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
   if (enableVue) {
     configs.push(vue({
       overrides: overrides.vue,
-      stylistic: enableStylistic,
+      stylistic: stylisticOptions,
       typescript: !!enableTypeScript,
     }))
   }
 
-  if (enableVueJsx) {
-    componentExts.push('jsx')
-    componentExts.push('tsx')
-    configs.push(vueJsx({
-      overrides: overrides.vueJsx,
-      stylistic: enableStylistic,
-    }))
-  }
   if (options.jsonc ?? true) {
     configs.push(
-      jsonc({
-        overrides: overrides.jsonc,
-        stylistic: enableStylistic,
-      }),
-      sortPackageJson(),
-      sortTsconfig(),
+        jsonc({
+          overrides: overrides.jsonc,
+          stylistic: stylisticOptions,
+        }),
+        sortPackageJson(),
+        sortTsconfig(),
     )
   }
 
   if (options.yaml ?? true) {
     configs.push(yaml({
       overrides: overrides.yaml,
-      stylistic: enableStylistic,
+      stylistic: stylisticOptions,
     }))
   }
 
@@ -158,23 +160,27 @@ export function mist(options: OptionsConfig & FlatESLintConfigItem = {}, ...user
     }))
   }
 
-  // User can optionally pass a flat config item to the first argument
+  /**
+   * vueJsx for prettier
+   */
+  if(options.vueJsx){
+    configs.push(vueJsx())
+  }
+
+      // User can optionally pass a flat config item to the first argument
   // We pick the known keys as ESLint would do schema validation
   const fusedConfig = flatConfigProps.reduce((acc, key) => {
     if (key in options)
       acc[key] = options[key] as any
     return acc
-  }, {} as FlatESLintConfigItem)
+  }, {} as ConfigItem)
   if (Object.keys(fusedConfig).length)
     configs.push([fusedConfig])
 
   const merged = combine(
-    ...configs,
-    ...userConfigs,
+      ...configs,
+      ...userConfigs,
   )
-
-  // recordRulesStateConfigs(merged)
-  // warnUnnecessaryOffRules()
 
   return merged
 }

@@ -1,10 +1,9 @@
 import globals from 'globals'
-import type { FlatESLintConfigItem, OptionsIsInEditor, OptionsOverrides } from '../types'
+import type { ConfigItem, OptionsIsInEditor, OptionsOverrides } from '../types'
 import { pluginAntfu, pluginUnusedImports } from '../plugins'
-import { OFF } from '../flags'
 import { GLOB_SRC, GLOB_SRC_EXT } from '../globs'
 
-export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): FlatESLintConfigItem[] {
+export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
   const {
     isInEditor = false,
     overrides = {},
@@ -31,7 +30,10 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
         },
         sourceType: 'module',
       },
-      name: 'mistjs:javascript',
+      linterOptions: {
+        reportUnusedDisableDirectives: true,
+      },
+      name: 'antfu:javascript',
       plugins: {
         'antfu': pluginAntfu,
         'unused-imports': pluginUnusedImports,
@@ -40,7 +42,6 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
         'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
 
         'array-callback-return': 'error',
-        'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
         'block-scoped-var': 'error',
         'constructor-super': 'error',
         'default-case-last': 'error',
@@ -116,6 +117,8 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
           'DebuggerStatement',
           'LabeledStatement',
           'WithStatement',
+          'TSEnumDeclaration[const=true]',
+          'TSExportAssignment',
         ],
         'no-self-assign': ['error', { props: true }],
         'no-self-compare': 'error',
@@ -154,7 +157,6 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
         'no-var': 'error',
-        'no-void': 'error',
         'no-with': 'error',
         'object-shorthand': [
           'error',
@@ -198,7 +200,8 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
 
         'symbol-description': 'error',
         'unicode-bom': ['error', 'never'],
-        'unused-imports/no-unused-imports': isInEditor ? OFF : 'error',
+        'unused-imports/no-unused-imports': isInEditor ? 'off' : 'error',
+
         'unused-imports/no-unused-vars': [
           'error',
           { args: 'after-used', argsIgnorePattern: '^_', vars: 'all', varsIgnorePattern: '^_' },
@@ -213,9 +216,9 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
     },
     {
       files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-      name: 'mistjs:scripts-overrides',
+      name: 'antfu:scripts-overrides',
       rules: {
-        'no-console': OFF,
+        'no-console': 'off',
       },
     },
   ]

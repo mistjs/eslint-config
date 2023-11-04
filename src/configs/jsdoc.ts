@@ -1,14 +1,14 @@
-import type { FlatESLintConfigItem, OptionsStylistic } from '../types'
+import type { ConfigItem, OptionsStylistic } from '../types'
 import { pluginJsdoc } from '../plugins'
 
-export function jsdoc(options: OptionsStylistic = {}): FlatESLintConfigItem[] {
+export function jsdoc(options: OptionsStylistic = {}): ConfigItem[] {
   const {
     stylistic = true,
   } = options
 
   return [
     {
-      name: 'mistjs:jsdoc',
+      name: 'antfu:jsdoc',
       plugins: {
         jsdoc: pluginJsdoc,
       },
@@ -30,11 +30,11 @@ export function jsdoc(options: OptionsStylistic = {}): FlatESLintConfigItem[] {
         'jsdoc/require-yields-check': 'warn',
 
         ...stylistic
-          ? {
+            ? {
               'jsdoc/check-alignment': 'warn',
               'jsdoc/multiline-blocks': 'warn',
             }
-          : {},
+            : {},
       },
     },
   ]

@@ -1,9 +1,9 @@
 import { configPrettier, pluginPrettier } from '../plugins'
-import type { FlatESLintConfigItem, OptionsIsInEditor, OptionsOverrides, OptionsStylistic } from '../types'
-import { GLOB_VUE, GLOB_VUE_JSX, GLOB_VUE_TSX } from '../globs'
+import type { ConfigItem, OptionsIsInEditor, OptionsOverrides, OptionsStylistic } from '../types'
+import { GLOB_JSX, GLOB_TSX, GLOB_VUE } from '../globs'
 import { OFF } from '../flags'
 
-export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOverrides = {}): FlatESLintConfigItem[] {
+export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOverrides = {}): ConfigItem[] {
   const {
     overrides = {},
   } = options
@@ -15,8 +15,8 @@ export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOv
     {
       name: 'mistjs:vue:jsx:setup',
       files: [
-        GLOB_VUE_JSX,
-        GLOB_VUE_TSX,
+        GLOB_JSX,
+        GLOB_TSX,
         GLOB_VUE,
       ],
       plugins: {

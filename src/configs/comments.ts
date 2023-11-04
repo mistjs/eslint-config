@@ -1,10 +1,10 @@
-import type { FlatESLintConfigItem } from '../types'
+import type { ConfigItem } from '../types'
 import { pluginComments } from '../plugins'
 
-export function comments(): FlatESLintConfigItem[] {
+export function comments(): ConfigItem[] {
   return [
     {
-      name: 'mistjs:eslint-comments',
+      name: 'antfu:eslint-comments',
       plugins: {
         'eslint-comments': pluginComments,
       },

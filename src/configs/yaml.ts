@@ -1,19 +1,23 @@
-import type { FlatESLintConfigItem, OptionsOverrides, OptionsStylistic } from '../types'
+import type { ConfigItem, OptionsOverrides, OptionsStylistic } from '../types'
 import { GLOB_YAML } from '../globs'
 import { parserYaml, pluginYaml } from '../plugins'
-import { OFF } from '../flags'
 
 export function yaml(
     options: OptionsOverrides & OptionsStylistic = {},
-): FlatESLintConfigItem[] {
+): ConfigItem[] {
     const {
         overrides = {},
         stylistic = true,
     } = options
 
+    const {
+        indent = 2,
+        quotes = 'single',
+    } = typeof stylistic === 'boolean' ? {} : stylistic
+
     return [
         {
-            name: 'mistjs:yaml:setup',
+            name: 'antfu:yaml:setup',
             plugins: {
                 yaml: pluginYaml as any,
             },
@@ -25,7 +29,7 @@ export function yaml(
             },
             name: 'antfu:yaml:rules',
             rules: {
-                'style/spaced-comment': OFF,
+                'style/spaced-comment': 'off',
 
                 'yaml/block-mapping': 'error',
                 'yaml/block-sequence': 'error',
@@ -44,10 +48,10 @@ export function yaml(
                         'yaml/flow-mapping-curly-spacing': 'error',
                         'yaml/flow-sequence-bracket-newline': 'error',
                         'yaml/flow-sequence-bracket-spacing': 'error',
-                        'yaml/indent': ['error', 2],
+                        'yaml/indent': ['error', indent === 'tab' ? 2 : indent],
                         'yaml/key-spacing': 'error',
                         'yaml/no-tab-indent': 'error',
-                        'yaml/quotes': ['error', { avoidEscape: false, prefer: 'single' }],
+                        'yaml/quotes': ['error', { avoidEscape: false, prefer: quotes }],
                         'yaml/spaced-comment': 'error',
                     }
                     : {},

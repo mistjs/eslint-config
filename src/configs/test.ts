@@ -1,9 +1,8 @@
-import type { FlatESLintConfigItem, OptionsIsInEditor, OptionsOverrides } from '../types'
+import type { ConfigItem, OptionsIsInEditor, OptionsOverrides } from '../types'
 import { pluginNoOnlyTests, pluginVitest } from '../plugins'
 import { GLOB_TESTS } from '../globs'
-import { OFF } from '../flags'
 
-export function test(options: OptionsIsInEditor & OptionsOverrides = {}): FlatESLintConfigItem[] {
+export function test(options: OptionsIsInEditor & OptionsOverrides = {}): ConfigItem[] {
   const {
     isInEditor = false,
     overrides = {},
@@ -11,7 +10,7 @@ export function test(options: OptionsIsInEditor & OptionsOverrides = {}): FlatES
 
   return [
     {
-      name: 'mistjs:test:setup',
+      name: 'antfu:test:setup',
       plugins: {
         test: {
           ...pluginVitest,
@@ -23,14 +22,13 @@ export function test(options: OptionsIsInEditor & OptionsOverrides = {}): FlatES
         },
       },
     },
-
     {
       files: GLOB_TESTS,
-      name: 'mistjs:test:rules',
+      name: 'antfu:test:rules',
       rules: {
         'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
         'test/no-identical-title': 'error',
-        'test/no-only-tests': isInEditor ? OFF : 'error',
+        'test/no-only-tests': isInEditor ? 'off' : 'error',
         'test/prefer-hooks-in-order': 'error',
         'test/prefer-lowercase-title': 'error',
 
