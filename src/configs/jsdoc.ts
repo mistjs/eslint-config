@@ -8,7 +8,7 @@ export function jsdoc(options: OptionsStylistic = {}): ConfigItem[] {
 
   return [
     {
-      name: 'antfu:jsdoc',
+      name: 'mist:jsdoc',
       plugins: {
         jsdoc: pluginJsdoc,
       },
@@ -30,11 +30,11 @@ export function jsdoc(options: OptionsStylistic = {}): ConfigItem[] {
         'jsdoc/require-yields-check': 'warn',
 
         ...stylistic
-            ? {
+          ? {
               'jsdoc/check-alignment': 'warn',
               'jsdoc/multiline-blocks': 'warn',
             }
-            : {},
+          : {},
       },
     },
   ]

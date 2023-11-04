@@ -7,12 +7,12 @@ import { pluginPerfectionist } from '../plugins'
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
 export function perfectionist(): ConfigItem[] {
-    return [
-        {
-            name: 'antfu:perfectionist',
-            plugins: {
-                perfectionist: pluginPerfectionist,
-            },
-        },
-    ]
+  return [
+    {
+      name: 'mist:perfectionist',
+      plugins: {
+        perfectionist: pluginPerfectionist,
+      },
+    },
+  ]
 }

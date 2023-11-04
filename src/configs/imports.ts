@@ -8,7 +8,7 @@ export function imports(options: OptionsStylistic = {}): ConfigItem[] {
 
   return [
     {
-      name: 'antfu:imports',
+      name: 'mist:imports',
       plugins: {
         antfu: pluginAntfu,
         import: pluginImport,
@@ -26,10 +26,10 @@ export function imports(options: OptionsStylistic = {}): ConfigItem[] {
         'import/order': 'error',
 
         ...stylistic
-            ? {
+          ? {
               'import/newline-after-import': ['error', { considerComments: true, count: 1 }],
             }
-            : {},
+          : {},
       },
     },
   ]

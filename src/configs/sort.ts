@@ -9,7 +9,7 @@ export function sortPackageJson(): ConfigItem[] {
   return [
     {
       files: ['**/package.json'],
-      name: 'antfu:sort-package-json',
+      name: 'mist:sort-package-json',
       rules: {
         'jsonc/sort-array-values': [
           'error',
@@ -104,7 +104,7 @@ export function sortTsconfig(): ConfigItem[] {
   return [
     {
       files: ['**/tsconfig.json', '**/tsconfig.*.json'],
-      name: 'antfu:sort-tsconfig',
+      name: 'mist:sort-tsconfig',
       rules: {
         'jsonc/sort-keys': [
           'error',

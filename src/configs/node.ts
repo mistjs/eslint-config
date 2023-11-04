@@ -4,7 +4,7 @@ import { pluginNode } from '../plugins'
 export function node(): ConfigItem[] {
   return [
     {
-      name: 'antfu:node',
+      name: 'mist:node',
       plugins: {
         node: pluginNode,
       },

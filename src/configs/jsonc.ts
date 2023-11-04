@@ -14,7 +14,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Config
 
   return [
     {
-      name: 'antfu:jsonc:setup',
+      name: 'mist:jsonc:setup',
       plugins: {
         jsonc: pluginJsonc as any,
       },
@@ -24,7 +24,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Config
       languageOptions: {
         parser: parserJsonc,
       },
-      name: 'antfu:jsonc:rules',
+      name: 'mist:jsonc:rules',
       rules: {
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
@@ -54,7 +54,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Config
         'jsonc/vue-custom-block/no-parsing-error': 'error',
 
         ...stylistic
-            ? {
+          ? {
               'jsonc/array-bracket-spacing': ['error', 'never'],
               'jsonc/comma-dangle': ['error', 'never'],
               'jsonc/comma-style': ['error', 'last'],
@@ -66,7 +66,7 @@ export function jsonc(options: OptionsStylistic & OptionsOverrides = {}): Config
               'jsonc/quote-props': 'error',
               'jsonc/quotes': 'error',
             }
-            : {},
+          : {},
 
         ...overrides,
       },

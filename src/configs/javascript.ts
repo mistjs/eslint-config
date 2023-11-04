@@ -33,7 +33,7 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
       linterOptions: {
         reportUnusedDisableDirectives: true,
       },
-      name: 'antfu:javascript',
+      name: 'mist:javascript',
       plugins: {
         'antfu': pluginAntfu,
         'unused-imports': pluginUnusedImports,
@@ -216,7 +216,7 @@ export function javascript(options: OptionsIsInEditor & OptionsOverrides = {}): 
     },
     {
       files: [`scripts/${GLOB_SRC}`, `cli.${GLOB_SRC_EXT}`],
-      name: 'antfu:scripts-overrides',
+      name: 'mist:scripts-overrides',
       rules: {
         'no-console': 'off',
       },

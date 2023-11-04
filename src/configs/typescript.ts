@@ -5,7 +5,7 @@ import { parserTs, pluginAntfu, pluginImport, pluginTs } from '../plugins'
 import { renameRules, toArray } from '../utils'
 
 export function typescript(
-    options?: OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions,
+  options?: OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions,
 ): ConfigItem[] {
   const {
     componentExts = [],
@@ -36,13 +36,13 @@ export function typescript(
   }
 
   const tsconfigPath = options?.tsconfigPath
-      ? toArray(options.tsconfigPath)
-      : undefined
+    ? toArray(options.tsconfigPath)
+    : undefined
 
   return [
     {
       // Install the plugins without globs, so they can be configured separately.
-      name: 'antfu:typescript:setup',
+      name: 'mist:typescript:setup',
       plugins: {
         antfu: pluginAntfu,
         import: pluginImport,
@@ -60,25 +60,25 @@ export function typescript(
           extraFileExtensions: componentExts.map(ext => `.${ext}`),
           sourceType: 'module',
           ...tsconfigPath
-              ? {
+            ? {
                 project: tsconfigPath,
                 tsconfigRootDir: process.cwd(),
               }
-              : {},
+            : {},
           ...parserOptions as any,
         },
       },
-      name: 'antfu:typescript:rules',
+      name: 'mist:typescript:rules',
       rules: {
         ...renameRules(
-            pluginTs.configs['eslint-recommended'].overrides![0].rules!,
-            '@typescript-eslint/',
-            'ts/',
+          pluginTs.configs['eslint-recommended'].overrides![0].rules!,
+          '@typescript-eslint/',
+          'ts/',
         ),
         ...renameRules(
-            pluginTs.configs.strict.rules!,
-            '@typescript-eslint/',
-            'ts/',
+          pluginTs.configs.strict.rules!,
+          '@typescript-eslint/',
+          'ts/',
         ),
 
         'antfu/generic-spacing': 'error',
@@ -119,7 +119,7 @@ export function typescript(
     },
     {
       files: ['**/*.d.ts'],
-      name: 'antfu:typescript:dts-overrides',
+      name: 'mist:typescript:dts-overrides',
       rules: {
         'eslint-comments/no-unlimited-disable': 'off',
         'import/no-duplicates': 'off',
@@ -129,14 +129,14 @@ export function typescript(
     },
     {
       files: ['**/*.{test,spec}.ts?(x)'],
-      name: 'antfu:typescript:tests-overrides',
+      name: 'mist:typescript:tests-overrides',
       rules: {
         'no-unused-expressions': 'off',
       },
     },
     {
       files: ['**/*.js', '**/*.cjs'],
-      name: 'antfu:typescript:javascript-overrides',
+      name: 'mist:typescript:javascript-overrides',
       rules: {
         'ts/no-require-imports': 'off',
         'ts/no-var-requires': 'off',

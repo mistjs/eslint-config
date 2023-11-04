@@ -10,14 +10,14 @@ export function markdown(options: OptionsComponentExts & OptionsOverrides = {}):
 
   return [
     {
-      name: 'antfu:markdown:setup',
+      name: 'mist:markdown:setup',
       plugins: {
         markdown: pluginMarkdown,
       },
     },
     {
       files: [GLOB_MARKDOWN],
-      name: 'antfu:markdown:processor',
+      name: 'mist:markdown:processor',
       processor: 'markdown/markdown',
     },
     {
@@ -32,7 +32,7 @@ export function markdown(options: OptionsComponentExts & OptionsOverrides = {}):
           },
         },
       },
-      name: 'antfu:markdown:rules',
+      name: 'mist:markdown:rules',
       rules: {
         'antfu/no-cjs-exports': 'off',
         'antfu/no-ts-export-equal': 'off',

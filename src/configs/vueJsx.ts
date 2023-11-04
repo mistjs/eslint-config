@@ -39,6 +39,7 @@ export function vueJsx(options: OptionsIsInEditor & OptionsStylistic & OptionsOv
         'style/indent': OFF,
         'style/brace-style': OFF,
         'style/operator-linebreak': OFF,
+        'style/quote-props': OFF,
         'antfu/if-newline': OFF,
         'antfu/consistent-list-newline': OFF,
         ...overrides,
